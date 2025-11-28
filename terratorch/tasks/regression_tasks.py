@@ -159,13 +159,15 @@ class IgnoreIndexMetricWrapper(WrapperMetric): # to be fixed for multiple variab
         self.metric.reset()
 
 class WeightedMetricWrapper(WrapperMetric):
-    def __init__(self, wrapped_metric: Metric, weights: list[float]) -> None:
+    def __init__(self, wrapped_metric: Metric, weights: list[float] | None, num_var: int) -> None:
         super().__init__()
         self.wrapped_metric = wrapped_metric
-        self.weights = torch.Tensor(weights)
+        if weights is not None:
+            self.weights = torch.Tensor(weights)
+        else: 
+            self.weights = torch.ones(num_var)
     
     def update(self, preds: Tensor, target: Tensor) -> None:
-        check_weights_classes(self.weights, preds.shape[1])
         return self.wrapped_metric.update(preds, target)
     
     def compute(self) -> Tensor:
@@ -674,8 +676,12 @@ class ScalarRegressionTask(TerraTorchTask):
                 
                 if self.var_weights is not None:
                     check_weights_classes(self.var_weights, self.num_outputs)
-                    for name, metric in metrics.items():
-                        per_class_metrics[f"{name}_weighted"] =  WeightedMetricWrapper(metric, self.var_weights)
+                    postfix = "weighted"
+                else:
+                    postfix = "mean"
+                    
+                for name, metric in metrics.items():
+                    per_class_metrics[f"{name}_{postfix}"] =  WeightedMetricWrapper(metric, self.var_weights, self.num_outputs)
                                             
                 return per_class_metrics
 

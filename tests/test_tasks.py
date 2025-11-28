@@ -40,7 +40,7 @@ def model_factory() -> str:
 @pytest.mark.parametrize("lr_overrides", [{"encoder": 0.01}, None])
 @pytest.mark.parametrize(("num_outputs", "var_weights", "var_names", "loss"), [(1, None, None, "mse"),
                                                                        (1, None, ["P", "K", "Mg", "pH"], "mse"),
-                                                                       (4, [0.2, 0.3, 0.4, 0.1], None, "mse"),
+                                                                       (4, None, None, "mse"),
                                                                        (4, [0.2, 0.3, 0.4, 0.1], ["P", "K", "Mg", "pH"], CustomMSELoss())])
 def test_create_scalar_regression_task_encoder_decoder(backbone, decoder, loss, model_factory: str, 
                                                        lr_overrides, num_outputs, var_weights, var_names):
