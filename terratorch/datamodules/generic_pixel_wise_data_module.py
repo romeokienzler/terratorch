@@ -8,7 +8,7 @@ import logging
 import os
 from collections.abc import Callable, Iterable
 from pathlib import Path
-from typing import Any
+from typing import Any, List, Optional
 
 import albumentations as A
 import kornia.augmentation as K
@@ -371,9 +371,9 @@ class GenericNonGeoPixelwiseRegressionDataModule(NonGeoDataModule):
         predict_output_bands: list[HLSBands | int | tuple[int, int] | str] | None = None,
         constant_scale: float = 1,
         rgb_indices: list[int] | None = None,
-        train_transform: A.Compose | None | list = None,
-        val_transform: A.Compose | None | list = None,
-        test_transform: A.Compose | None | list = None,
+        train_transform: Optional[List[Any]] = None,
+        val_transform: Optional[List[Any]] = None,
+        test_transform: Optional[List[Any]] = None,
         expand_temporal_dimension: bool = False,
         reduce_zero_label: bool = False,
         no_data_replace: float | None = None,

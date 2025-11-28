@@ -13,7 +13,6 @@ trainer:
       save_dir: tests/
       name: all_ecos_random
   callbacks:
-    - class_path: RichProgressBar
     - class_path: LearningRateMonitor
       init_args:
         logging_interval: epoch
