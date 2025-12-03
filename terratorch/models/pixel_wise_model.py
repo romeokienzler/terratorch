@@ -8,7 +8,7 @@ from torch import nn
 
 from terratorch.models.heads import RegressionHead, SegmentationHead
 from terratorch.models.model import AuxiliaryHeadWithDecoderWithoutInstantiatedHead, Model, ModelOutput
-from terratorch.models.utils import pad_images
+from terratorch.models.utils import pad_images, get_image_size
 
 def freeze_module(module: nn.Module):
     for param in module.parameters():
@@ -109,22 +109,10 @@ class PixelWiseModel(Model, SegmentationModel):
     def forward(self, x: torch.Tensor, **kwargs) -> ModelOutput:
         """Sequentially pass `x` through model`s encoder, decoder and heads"""
 
-        def _get_size(x):
-            if isinstance(x, torch.Tensor):
-                return x.shape[-2:]
-            elif isinstance(x, dict):
-                # Multimodal input in passed as dict (Assuming first modality to be an image)
-                return list(x.values())[0].shape[-2:]
-            elif hasattr(kwargs, 'image_size'):
-                return kwargs['image_size']
-            else:
-                ValueError('Could not infer image shape.')
-
-        image_size = _get_size(x)
-        if isinstance(x, torch.Tensor) and self.patch_size:
-            # Only works for single image modalities
+        image_size = kwargs.get('image_size', None) or get_image_size(x)
+        if self.patch_size and self.padding is not None:
             x = pad_images(x, self.patch_size, self.padding)
-        input_size = _get_size(x)
+        input_size = get_image_size(x)
 
         features = self.encoder(x, **kwargs)
 
