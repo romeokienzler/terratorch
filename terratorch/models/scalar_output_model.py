@@ -6,7 +6,7 @@ from torch import nn
 import torchvision.transforms as transforms
 from terratorch.models.heads import ClassificationHead
 from terratorch.models.model import AuxiliaryHeadWithDecoderWithoutInstantiatedHead, Model, ModelOutput
-from terratorch.models.utils import pad_images
+from terratorch.models.utils import pad_images, get_image_size
 import pdb
 
 
@@ -93,10 +93,12 @@ class ScalarOutputModel(Model, SegmentationModel):
     def forward(self, x: torch.Tensor, **kwargs) -> ModelOutput:
         """Sequentially pass `x` through model`s encoder, decoder and heads"""
 
-        image_size = kwargs.get('image_size', None) or get_image_size(x)
+        if self.patch_size and self.padding is not None:
+            x = pad_images(x, self.patch_size, self.padding)
+        input_size = get_image_size(x)
         features = self.encoder(x, **kwargs)
 
-        features = self.neck(features, image_size=image_size)
+        features = self.neck(features, image_size=input_size)
 
         decoder_output = self.decoder([f.clone() for f in features])
         mask = self.head(decoder_output)
