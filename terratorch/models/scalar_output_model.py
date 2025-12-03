@@ -27,8 +27,8 @@ class ScalarOutputModel(Model, SegmentationModel):
         encoder: nn.Module,
         decoder: nn.Module,
         head_kwargs: dict,
-        patch_size: int = None,
-        padding: str = None,
+        patch_size: int | list[int] | None = None,
+        padding: str = "reflect",
         decoder_includes_head: bool = False,
         auxiliary_heads: list[AuxiliaryHeadWithDecoderWithoutInstantiatedHead] | None = None,
         neck: nn.Module | None = None,
@@ -45,6 +45,8 @@ class ScalarOutputModel(Model, SegmentationModel):
                 AuxiliaryHeads with heads to be instantiated. Defaults to None.
             neck (nn.Module | None): Module applied between backbone and decoder.
                 Defaults to None, which applies the identity.
+            patch_size (int, list[int] | None): Patch size used for automated padding of images. Defaults to None.
+            padding (str): Padding method, defaults to "reflect".
         """
         super().__init__()
         self.task = task

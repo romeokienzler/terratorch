@@ -50,6 +50,9 @@ def pad_images(imgs: torch.Tensor | dict[str, torch.Tensor], patch_size: int | l
     elif not isinstance(imgs, torch.Tensor):
         # Expect tensor
         return imgs
+    elif imgs.ndim < 4:
+        # Only pad images with format [B, C, T, H, W] or [B, C, T, H, W]
+        return imgs
 
     p_t = 1
     if isinstance(patch_size, int):
@@ -66,13 +69,13 @@ def pad_images(imgs: torch.Tensor | dict[str, torch.Tensor], patch_size: int | l
     # Double the patch size to ensure the resulting number of patches is divisible by 2 (required for many decoders)
     p_h, p_w = p_h * 2, p_w * 2
 
-    if p_t > 1 and len(imgs.shape) < 5:
+    if p_t > 1 and imgs.ndim < 5:
         raise ValueError(f"Multi-temporal padding requested (p_t = {p_t}) "
                          f"but no multi-temporal data provided (data shape = {imgs.shape})."
                          f"Expecting tensor or dict of tensors with shape [B, C, T, H, W].")
 
     h, w = imgs.shape[-2:]
-    t = imgs.shape[-3] if len(imgs.shape) > 4 else 1
+    t = imgs.shape[-3] if imgs.ndim > 4 else 1
     t_pad, h_pad, w_pad = (p_t - t % p_t) % p_t, (p_h - h % p_h) % p_h, (p_w - w % p_w) % p_w
     # Split padding equally on both sides
     h_pad_left, h_pad_right = h_pad // 2, h_pad - h_pad // 2
