@@ -50,7 +50,6 @@ dependencies = [
   "torchmetrics",
   "geopandas",
   "lightly",
-  "jsonargparse", #<=4.35.0",
   "h5py",
   "lightning",
   "segmentation-models-pytorch", #==0.5.0",
