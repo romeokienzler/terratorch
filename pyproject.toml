@@ -7,7 +7,7 @@ include = ["terratorch*"]
 
 [project]
 name = "terratorch"
-version = "v1.1.1"
+version = "v1.1.2rc2"
 description = "TerraTorch - The geospatial foundation model fine-tuning toolkit"
 license = { "text" = "Apache License, Version 2.0" }
 readme = "README.md"
@@ -54,7 +54,7 @@ dependencies = [
   "h5py",
   "lightning",
   "segmentation-models-pytorch", #==0.5.0",
-  "jsonargparse",
+  "jsonargparse==4.40.0",
   "torchgeo", #>=0.7.0,<0.7.2",
   "einops",
   "timm>=1.0.15",
