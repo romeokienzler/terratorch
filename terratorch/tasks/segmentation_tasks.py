@@ -48,7 +48,7 @@ def init_loss(loss: str, ignore_index: int = None, class_weights: list = None) -
         )
 
 
-    class SemanticSegmentationTask(TerraTorchTask):
+class SemanticSegmentationTask(TerraTorchTask):
         """Semantic Segmentation Task that accepts models from a range of sources.
 
         This class is analog in functionality to class SemanticSegmentationTask defined by torchgeo.
