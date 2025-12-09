@@ -14,9 +14,7 @@ trainer:
   num_nodes: 1
   precision: 16-mixed
   logger: true
-  callbacks:
-    - class_path: lightning.pytorch.callbacks.RichProgressBar
-    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+  callbacks:    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
       init_args:
         logging_interval: epoch
     # ---- Early stop if ----
