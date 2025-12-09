@@ -10,28 +10,31 @@ trainer:
   num_nodes: 1
   precision: 16-mixed
   logger: true
-  callbacks:    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
+
+  callbacks:
+    - class_path: lightning.pytorch.callbacks.LearningRateMonitor
       init_args:
         logging_interval: epoch
-    # ---- Early stop if ----
+
     - class_path: lightning.pytorch.callbacks.EarlyStopping
       init_args:
         monitor: val/loss
         patience: 20
-     # ---- Early stop endif ----
+
     - class_path: lightning.pytorch.callbacks.ModelCheckpoint
       init_args:
         dirpath: /dccstor/terratorch/tmp/timm_resnet18/
         mode: min
         monitor: val/loss
         filename: best-state_dict-{epoch:02d}
-        save_weights_only: True
-      
+        save_weights_only: true
+
   max_epochs: 2
   check_val_every_n_epoch: 1
   log_every_n_steps: 50
   enable_checkpointing: true
   default_root_dir: /dccstor/terratorch/tmp/timm_resnet18/
+
 data:
   class_path: terratorch.datamodules.GenericNonGeoSegmentationDataModule
   init_args:
