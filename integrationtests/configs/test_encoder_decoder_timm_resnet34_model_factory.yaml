@@ -101,41 +101,33 @@ data:
     # if backbone is prithvi-EO-v2
     test_transform:
       - class_path: albumentations.pytorch.transforms.ToTensorV2
+      
 model:
   class_path: terratorch.tasks.SemanticSegmentationTask
   init_args:
-    model_args: 
-      backbone: timm_resnet34 # timm_resnet34 , timm_resnet18 , timm_resnet50 , timm_resnet101 , timm_resnet152
-      backbone_pretrained: true 
-      num_classes: 3
-      backbone_in_chans: 6 # To be used with RGB when pretrained, can be more if not retrained
-      necks: 
-        - name: SelectIndices
-          indices:  [0, 1, 2, 3]
-      decoder: UNetDecoder
-      #TODO user provided channels
-      decoder_channels: [512, 256, 128, 64]
-      head_channel_list:
-        - 256
-
-      head_dropout: 0.1
-    
     model_factory: EncoderDecoderFactory
-    loss: ce
-    plot_on_val: 2
-    ignore_index: -1
-    freeze_backbone: false
-    freeze_decoder: false
+    model_args:
+      task: segmentation
 
-    # ---- optimizer start ----
-    # ---- optimizer end ----
-    
-    tiled_inference_parameters: 
-      h_crop: 224
-      h_stride: 196
-      w_crop: 224
-      w_stride: 196
-      average_patches: True
+      backbone: timm_resnet50
+      backbone_kwargs:
+        pretrained: true
+        in_chans: 6
+
+      decoder: UNetDecoder
+      decoder_kwargs:
+        decoder_channels: [512, 256, 128, 64]
+
+      head_kwargs:
+        num_classes: 3
+        dropout: 0.1
+
+      necks:
+        - name: SelectIndices
+          indices: [0, 1, 2, 3]
+
+      rescale: true
+
     
 optimizer:
   class_path: torch.optim.Adam

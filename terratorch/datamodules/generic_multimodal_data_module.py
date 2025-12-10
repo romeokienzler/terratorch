@@ -216,7 +216,6 @@ class GenericMultiModalDataModule(NonGeoDataModule):
         channel_position: int = -3,
         concat_bands: bool = False,
         check_stackability: bool = True,
-        img_grep: str | dict[str, str] | None = None,
     ) -> None:
         """Constructor
 
@@ -350,11 +349,6 @@ class GenericMultiModalDataModule(NonGeoDataModule):
         self.non_image_modalities = list(set(self.modalities) - set(self.image_modalities))
         if task == "scalar":
             self.non_image_modalities += ["label"]
-
-        if img_grep is not None:
-            warnings.warn(f"img_grep was renamed to image_grep and will be removed in a future version.",
-                          DeprecationWarning)
-            image_grep = img_grep
 
         if isinstance(image_grep, dict):
             # Check if image_grep is valid
