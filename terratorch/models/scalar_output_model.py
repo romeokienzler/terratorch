@@ -128,6 +128,3 @@ class ScalarOutputModel(Model, SegmentationModel):
             raise Exception(msg)
             
         return ScalarHead(input_embed_dim, **head_kwargs)
-        
-       
-            
