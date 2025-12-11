@@ -105,21 +105,13 @@ data:
     test_data_root:
       S1GRD: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/training_data/S1GRD
       S2L1C: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/training_data/S2L1C
-    test_label_data_root: 
-      S1GRD: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/test_data.txt
-      S2L1C: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/test_data.txt
-    test_split: 
-      S1GRD: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/test_data.txt
-      S2L1C: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/test_data.txt
+    test_label_data_root: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/labels/
+    test_split: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/split_files/test_data.txt
     train_data_root:
       S1GRD: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/training_data/S1GRD
       S2L1C: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/training_data/S2L1C
-    train_label_data_root:
-      S1GRD: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/labels/
-      S2L1C: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/labels/
-    train_split: 
-      S1GRD: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/train_data.txt
-      S2L1C: /ft-data//geodata-r2djfgvurzn3zbmqqzijgd/split_files/train_data.txt
+    train_label_data_root: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/labels/
+    train_split: /ft-data/geodata-r2djfgvurzn3zbmqqzijgd/split_files/train_data.txt
     train_transform:
     - class_path: albumentations.D4
       init_args:
