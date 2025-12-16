@@ -96,6 +96,7 @@ test = [
   "numba",
   "hdf5plugin",
   "h5netcdf",
+  "geobenchv2==0.9",
 ]
 
 surya = [
