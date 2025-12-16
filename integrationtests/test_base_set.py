@@ -333,10 +333,6 @@ def test_current_terratorch_version_buildings_predict(config_name, buildings_ima
     pattern = os.path.join(TMP_ROOT, config_name, "best-state_dict-epoch=*.ckpt")
     checkpoint_path = glob.glob(pattern)[0]
 
-    # deploy_config_path = create_deploy_config(config_path)
-    # ToDo: Remove after updating terratorch version and running fine-tune tests again.
-    # update_grep_config_in_file(config_path=config_path, new_img_pattern="*.tif*")
-
     preds = run_inference(config=config_path, checkpoint=checkpoint_path, image=buildings_image)
 
     assert isinstance(preds, torch.Tensor), f"Expected predictions to be type torch.Tensor, got {type(preds)}"
@@ -350,10 +346,6 @@ def test_current_terratorch_version_floods_predict(config_name, floods_image):
 
     pattern = os.path.join(TMP_ROOT, config_name, "best-state_dict-epoch=*.ckpt")
     checkpoint_path = glob.glob(pattern)[0]
-
-    # deploy_config_path = create_deploy_config(config_path)
-    # ToDo: Remove after updating terratorch version and running fine-tune tests again.
-    # update_grep_config_in_file(config_path=config_path, new_img_pattern="*.tif*")
 
     preds = run_inference(config=config_path, checkpoint=checkpoint_path, image=floods_image)
 
@@ -386,9 +378,6 @@ def test_current_terratorch_version_burnscars_predict(config_name, burnscars_ima
     # config_path = f"configs/test_{config_name}.yaml"
     config_path = os.path.join(TMP_ROOT, config_name, "lightning_logs", "version_0", "config_deploy.yaml")
 
-    # ToDo: Remove after updating terratorch version and running fine-tune tests again.
-    # update_grep_config_in_file(config_path=config_path, new_img_pattern="*.tif*")
-
     pattern = os.path.join(TMP_ROOT, config_name, "best-state_dict-epoch=*.ckpt")
     checkpoint_path = glob.glob(pattern)[0]
 
@@ -399,7 +388,6 @@ def test_current_terratorch_version_burnscars_predict(config_name, burnscars_ima
     gc.collect()
 
 
-"""
 @pytest.mark.parametrize(
     "model_name",
     [
@@ -418,6 +406,8 @@ def test_current_terratorch_version_burnscars_predict(config_name, burnscars_ima
         "clay_v1",
         "timm_convnext_large",
         "timm_convnext_xlarge",
+        "terramind_large",
+        "terramind_base",
         "experiment",
     ],
 )
@@ -438,4 +428,4 @@ def test_cleanup(model_name):
     assert not os.path.exists(full_path)
 
     gc.collect()
-"""
+
