@@ -105,8 +105,8 @@ class GenericMultimodalDataset(NonGeoDataset, ABC):
                 of all modalities. Defaults to None.
             output_bands (dict[list], optional): Bands that should be output by the dataset as named by dataset_bands,
                 provided as a dictionary with modality keys. Can be subset of all modalities. Defaults to None.
-            constant_scale (dict[float]): Factor to multiply data values by, provided as a dictionary with modalities as
-                keys. Can be subset of all modalities. Defaults to None.
+            constant_scale (dict[str, float]): Factor to multiply data values by, provided as a dictionary with
+                modalities as keys. Can be subset of all modalities. Defaults to None.
             transform (Albumentations.Compose | dict | None): Albumentations transform to be applied to all image
                 modalities (transformation are shared between image modalities, e.g., similar crop or rotation).
                 Should end with ToTensorV2(). If used through the generic_data_module, should not include normalization.
@@ -594,7 +594,7 @@ class GenericMultimodalSegmentationDataset(GenericMultimodalDataset):
         dataset_bands: dict[str, list] | None = None,
         output_bands: dict[str, list] | None = None,
         class_names: list[str] | None = None,
-        constant_scale: dict[str, float] = 1.0,
+        constant_scale: dict[str, float] = None,
         transform: A.Compose | None = None,
         no_data_replace: float | None = None,
         no_label_replace: int | None = -1,
@@ -639,8 +639,8 @@ class GenericMultimodalSegmentationDataset(GenericMultimodalDataset):
             output_bands (dict[list], optional): Bands that should be output by the dataset as named by dataset_bands,
                 provided as a dictionary with modality keys. Can be subset of all modalities. Defaults to None.
             class_names (list[str], optional): Names of the classes. Defaults to None.
-            constant_scale (dict[str, float]): Factor to multiply data values by, provided as a dictionary with modalities as
-                keys. Can be subset of all modalities. Defaults to None.
+            constant_scale (dict[str, float]): Factor to multiply data values by, provided as a dictionary with
+                modalities as keys. Can be subset of all modalities. Defaults to None.
             transform (Albumentations.Compose | dict | None): Albumentations transform to be applied to all image
                 modalities (transformation are shared between image modalities, e.g., similar crop or rotation).
                 Should end with ToTensorV2(). If used through the generic_data_module, should not include normalization.
@@ -716,7 +716,7 @@ class GenericMultimodalPixelwiseRegressionDataset(GenericMultimodalDataset):
         skip_file_checks: bool = False,
         dataset_bands: dict[str, list] | None = None,
         output_bands: dict[str, list] | None = None,
-        constant_scale: dict[str, float] = 1.0,
+        constant_scale: dict[str, float] = None,
         transform: A.Compose | dict | None = None,
         no_data_replace: float | None = None,
         no_label_replace: float | None = None,
@@ -834,7 +834,7 @@ class GenericMultimodalScalarDataset(GenericMultimodalDataset):
         dataset_bands: dict[str, list] | None = None,
         output_bands: dict[str, list] | None = None,
         class_names: list[str] | None = None,
-        constant_scale: dict[str, float] = 1.0,
+        constant_scale: dict[str, float] = None,
         transform: A.Compose | None = None,
         no_data_replace: float | None = None,
         no_label_replace: int | None = None,
@@ -880,8 +880,8 @@ class GenericMultimodalScalarDataset(GenericMultimodalDataset):
             output_bands (dict[list], optional): Bands that should be output by the dataset as named by dataset_bands,
                 provided as a dictionary with modality keys. Can be subset of all modalities. Defaults to None.
             class_names (list[str], optional): Names of the classes. Defaults to None.
-            constant_scale (dict[float]): Factor to multiply data values by, provided as a dictionary with modalities as
-                keys. Can be subset of all modalities. Defaults to None.
+            constant_scale (dict[str, float]): Factor to multiply data values by, provided as a dictionary with
+                modalities as keys. Can be subset of all modalities. Defaults to None.
             transform (Albumentations.Compose | dict | None): Albumentations transform to be applied to all image
                 modalities (transformation are shared between image modalities, e.g., similar crop or rotation).
                 Should end with ToTensorV2(). If used through the generic_data_module, should not include normalization.

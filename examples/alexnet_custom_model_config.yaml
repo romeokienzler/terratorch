@@ -13,7 +13,6 @@ trainer:
       save_dir: examples/
       name: custom_modules_root
   callbacks:
-    - class_path: RichProgressBar
     - class_path: LearningRateMonitor
       init_args:
         logging_interval: epoch
@@ -57,7 +56,7 @@ data:
           value: 0
           mask_value: 1
           p: 0.5
-      - class_path: ToTensorV2
+      - class_path: albumentations.pytorch.transforms.ToTensorV2
     dataset_bands:
       - 0
       - BLUE
